@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+    //echo 1;
     return view('welcome');
 });
 
@@ -52,3 +53,13 @@ Route::get('/user/center','User\UserController@center');
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
 Route::get('/mvc/bst','Mvc\MvcController@bst');
+
+
+Route::get('/check_cookie','Mvc\MvcController@checkCookie')->middleware('check.cookie');
+Route::get('/cart','Cart\CartController@index')->middleware('check.login.token');
+Route::get('/cart/add/{goods_id}','Cart\CartController@add')->middleware('check.login.token');
+Route::post('/cart/add2','Cart\CartController@add2')->middleware('check.login.token');
+Route::get('/cart/del/{goods_id}','Cart\CartController@del')->middleware('check.login.token');
+
+//商品详情
+Route::get('/goods/list/{goods_id}','Goods\GoodsController@index');

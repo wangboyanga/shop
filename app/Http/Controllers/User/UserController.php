@@ -79,7 +79,14 @@ class UserController extends Controller
         //print_r($data);
         $uid=UserModel::insertGetId($data);
         if($uid){
+
+            $token = substr(md5(time().mt_rand(1,99999)),10,10);
+            //setcookie('uid',$res->uid,time()+86400,'/','lening.com',false,true);
             setcookie('uid',$uid,time()+60*60*24,'/','shop.lening.com',false,false);
+            setcookie('token',$token,time()+86400,'/user','',false,true);
+
+            $request->session()->put('u_token',$token);
+            $request->session()->put('uid',$uid);
             echo "注册成功";
             header('Refresh:2;url=/user/center');
         }else{
@@ -111,7 +118,7 @@ class UserController extends Controller
                 setcookie('token',$token,time()+86400,'/user','',false,true);
 
                 $request->session()->put('u_token',$token);
-
+                $request->session()->put('uid',$res->uid);
                 header("Refresh:3;url=/user/center");
                 echo "登陆成功";
             }else{
@@ -123,7 +130,11 @@ class UserController extends Controller
     }
     public function center(Request $request)
     {
-        if($_COOKIE['token'] != $request->session()->get('u_token')){
+        if(empty($request->session()->get('u_token'))){
+            header('Refresh:2;url=/user/login');
+            //echo $request->session()->get('u_token');
+            die('请先登录');
+        }else if($_COOKIE['token'] != $request->session()->get('u_token')){
             die("非法请求");
         }else{
             echo '正常请求';

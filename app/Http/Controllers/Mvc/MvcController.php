@@ -16,4 +16,7 @@ class MvcController extends Controller{
         ];
         return view('mvc.bst',$data);
     }
+    public function checkCookie(){
+        echo __METHOD__;
+    }
 }
