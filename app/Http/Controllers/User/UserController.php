@@ -83,7 +83,7 @@ class UserController extends Controller
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
             //setcookie('uid',$res->uid,time()+86400,'/','lening.com',false,true);
             setcookie('uid',$uid,time()+60*60*24,'/','shop.lening.com',false,false);
-            setcookie('token',$token,time()+86400,'/user','',false,true);
+            setcookie('token',$token,time()+60*60*24,'/user','',false,true);
 
             $request->session()->put('u_token',$token);
             $request->session()->put('uid',$uid);
@@ -114,8 +114,8 @@ class UserController extends Controller
         if($res){
             if(password_verify($password,$res->password)){
                 $token = substr(md5(time().mt_rand(1,99999)),10,10);
-                setcookie('uid',$res->uid,time()+86400,'/','lening.com',false,true);
-                setcookie('token',$token,time()+86400,'/user','',false,true);
+                setcookie('uid',$res->uid,time()+60*60*24,'/','lening.com',false,true);
+                setcookie('token',$token,time()+60*60*24,'/user','',false,true);
 
                 $request->session()->put('u_token',$token);
                 $request->session()->put('uid',$res->uid);
@@ -145,6 +145,15 @@ class UserController extends Controller
             exit;
         }else{
             echo 'UID: '.$_COOKIE['uid'] . ' 欢迎回来';
+            header('Refresh:2;url=/goods/list/11');
+            echo "</br>";
+            echo "正在前往商品页面";
         }
+    }
+    public function logou(){
+        setcookie('uid',null,time()+60*60*24,'/','lening.com',false,true);
+        setcookie('token',null,time()+60*60*24,'/user','',false,true);
+        echo "退出成功";
+        header('Refresh:2;url=/user/login');
     }
 }

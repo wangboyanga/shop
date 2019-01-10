@@ -49,6 +49,7 @@ Route::post('/user/reg','User\UserController@doReg');
 Route::get('/user/login','User\UserController@login');
 Route::post('/user/login','User\UserController@doLogin');
 Route::get('/user/center','User\UserController@center');
+Route::get('/user/logou','User\UserController@logou');
 
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
@@ -60,6 +61,11 @@ Route::get('/cart','Cart\CartController@index')->middleware('check.login.token')
 Route::get('/cart/add/{goods_id}','Cart\CartController@add')->middleware('check.login.token');
 Route::post('/cart/add2','Cart\CartController@add2')->middleware('check.login.token');
 Route::get('/cart/del/{goods_id}','Cart\CartController@del')->middleware('check.login.token');
+Route::get('/cart/del2/{id}','Cart\CartController@del2')->middleware('check.login.token');
 
 //商品详情
 Route::get('/goods/list/{goods_id}','Goods\GoodsController@index');
+Route::get('/order/add','Order\OrderController@add');
+Route::get('/order/list','Order\OrderController@list');
+Route::get('/order/pay/{order_id}','Order\OrderController@pay');
+Route::get('/order/off/{order_id}','Order\OrderController@off');
