@@ -145,7 +145,7 @@ class UserController extends Controller
             exit;
         }else{
             echo 'UID: '.$_COOKIE['uid'] . ' 欢迎回来';
-            header('Refresh:2;url=/goods/list/11');
+            header('Refresh:2;url=/goods/list/1');
             echo "</br>";
             echo "正在前往商品页面";
         }
