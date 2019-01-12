@@ -71,3 +71,4 @@ Route::get('/order/refund/{order_id}','Order\OrderController@refund')->middlewar
 Route::get('/order/list2/{order_id}','Order\OrderController@list2')->middleware('check.login.token');
 Route::get('/order/pay/{order_id}','Order\OrderController@pay')->middleware('check.login.token');
 Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('check.login.token');
+Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');

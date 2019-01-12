@@ -8,11 +8,25 @@ use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\OrderModel;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
-
+use GuzzleHttp\Client;
 class OrderController extends Controller
 {
     public function index(){
         echo __METHOD__;
+    }
+
+    public function wby(){
+        $url='http://wby.wangby.cn';
+        $client = new Client([
+            'base_uri' => $url,
+            'timeout'  => 2.0,
+        ]);
+        $response = $client->request('GET', '/order.php');
+        echo $response->getBody();
+        //$url="http://www.order.com";
+        //$client=new Client(['base_uri'=>$url,'timeout'=>2.0,]);
+        //$response=$client->request('GET','/order.php');
+        //echo $response->getBody();
     }
     //下单
     public function add(Request $request){
