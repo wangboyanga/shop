@@ -72,3 +72,6 @@ Route::get('/order/list2/{order_id}','Order\OrderController@list2')->middleware(
 Route::get('/order/pay/{order_id}','Order\OrderController@pay')->middleware('check.login.token');
 Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('check.login.token');
 Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');
+Route::get('/order/alipay/test','Order\AlipayController@test')->middleware('check.login.token');
+
+
