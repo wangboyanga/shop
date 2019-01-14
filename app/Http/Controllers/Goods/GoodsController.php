@@ -26,7 +26,7 @@ class GoodsController extends Controller
         return view('goods.index',$data);
     }
     public function list(){
-        $goods=GoodsModel::where(['uid'=>session()->get('uid')])->get();
+        $goods=GoodsModel::get();
         $data=[
             'goods'=>$goods
         ];

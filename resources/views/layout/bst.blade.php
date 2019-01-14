@@ -30,7 +30,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="/order/list">我的订单</a></li>
                             <li><a href="/cart">我的购物车</a></li>
-                            <li><a href="#">Something else here</a></li>
+                            <li><a href="/goods/list">商品页</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Nav header</li>
                             <li><a href="#">Separated link</a></li>

@@ -29,7 +29,7 @@
             $cart_goods = CartModel::where(['uid'=>$this->uid])->get()->toArray();
             //print_r($cart_goods);
             if(empty($cart_goods)){
-                header('refresh:2;url=/goods/list/1');
+                header('refresh:2;url=/goods/list');
                 die("购物车是空的");
             }
             if($cart_goods){
