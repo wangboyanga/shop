@@ -21,7 +21,7 @@ class AlipayController extends Controller
         $this->return_url=env("ALIPAY_RETURN_URL");
     }
 
-    public function test()
+    public function test($order_id)
     {
         $bizcont = [
             'subject'           => 'ancsd'. mt_rand(1111,9999).str_random(6),
@@ -41,6 +41,7 @@ class AlipayController extends Controller
             'notify_url'   => $this->notify_url,    //异步通知
             'return_url'   => $this->return_url,    //同步通知
             'biz_content'   => json_encode($bizcont),
+            'order_id'=>$order_id
         ];
 
         $sign = $this->rsaSign($data);
@@ -138,7 +139,9 @@ class AlipayController extends Controller
         }
 
         //处理订单逻辑
-        $this->dealOrder($_GET);
+        //$this->dealOrder($_GET);
+        $order_id=$_GET['order_id'];
+        header("Refresh:2;url=/order/pay/$order_id");
     }
 
     /**
