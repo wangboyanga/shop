@@ -65,6 +65,7 @@ Route::get('/cart/del2/{id}','Cart\CartController@del2')->middleware('check.logi
 
 //商品详情
 Route::get('/goods/list/{goods_id}','Goods\GoodsController@index')->middleware('check.login.token');
+Route::get('/goods/list','Goods\GoodsController@list')->middleware('check.login.token');
 Route::get('/order/add','Order\OrderController@add')->middleware('check.login.token');
 Route::get('/order/list','Order\OrderController@list')->middleware('check.login.token');
 Route::get('/order/refund/{order_id}','Order\OrderController@refund')->middleware('check.login.token');

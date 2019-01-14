@@ -15,6 +15,7 @@
         </div>
         <input type="hidden" id="goods_id" value="{{$goods->goods_id}}">
         <button type="submit" class="btn btn-primary" id="add_cart_btn">加入购物车</button>
+        <a href="/cart" class="btn btn-primary" id="add_cart_btn">前往购物车</a>
     </form>
     </div>
 @endsection

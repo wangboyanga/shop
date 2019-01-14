@@ -25,4 +25,12 @@ class GoodsController extends Controller
         ];
         return view('goods.index',$data);
     }
+    public function list(){
+        $goods=GoodsModel::where(['uid'=>session()->get('uid')])->get();
+        $data=[
+            'goods'=>$goods
+        ];
+        return view('goods.list',$data);
+        //var_dump($goods);
+    }
 }
