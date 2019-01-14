@@ -61,8 +61,8 @@
         <tr>
             <td colspan="2">
                 @if($v['is_pay']==1 && $v['is_delete']==1)
-                    <a href="/orders/alipay/test/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 去支付 </a>
-                    <a href="/order/off/{{$v['order_id']}}" class="btn btn-info "> 取消订单 </a>
+                    <a href="/order/pay/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 去支付 </a>
+                    <a href="/order/off/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 取消订单 </a>
                 @elseif($v['is_pay']==2)
                     <a href="/order/refund/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 去退款 </a>
                 @elseif($v['is_delete']==1 && $v['is_pay']==1)

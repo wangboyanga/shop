@@ -73,7 +73,7 @@ Route::get('/order/list2/{order_id}','Order\OrderController@list2')->middleware(
 Route::get('/order/pay/{order_id}','Order\OrderController@pay')->middleware('check.login.token');
 Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('check.login.token');
 Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');
-Route::get('/order/alipay/test/{order_id}','Order\AlipayController@test')->middleware('check.login.token');
+Route::get('/order/alipay/test','Order\AlipayController@test')->middleware('check.login.token');
 
 Route::post('/pay/alipay/notify','Order\AlipayController@aliNotify');        //支付宝支付 异步通知回调
 Route::get('/pay/alipay/return','Order\AlipayController@aliReturn');        //支付宝支付 同步通知回调
