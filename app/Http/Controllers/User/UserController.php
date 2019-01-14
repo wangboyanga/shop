@@ -82,8 +82,8 @@ class UserController extends Controller
 
             $token = substr(md5(time().mt_rand(1,99999)),10,10);
             //setcookie('uid',$res->uid,time()+86400,'/','lening.com',false,true);
-            setcookie('uid',$uid,time()+60*60*24,'/','',false,false);
-            setcookie('token',$token,time()+60*60*24,'/user','',false,true);
+            setcookie('uid',$uid,'','/','',false,false);
+            setcookie('token',$token,'','/user','',false,true);
 
             $request->session()->put('u_token',$token);
             $request->session()->put('uid',$uid);
@@ -114,8 +114,8 @@ class UserController extends Controller
         if($res){
             if(password_verify($password,$res->password)){
                 $token = substr(md5(time().mt_rand(1,99999)),10,10);
-                setcookie('uid',$res->uid,time()+60*60*24,'/','',false,true);
-                setcookie('token',$token,time()+60*60*24,'/user','',false,true);
+                setcookie('uid',$res->uid,'','/','',false,true);
+                setcookie('token',$token,'','/user','',false,true);
 
                 $request->session()->put('u_token',$token);
                 $request->session()->put('uid',$res->uid);
@@ -151,8 +151,8 @@ class UserController extends Controller
         }
     }
     public function logou(){
-        setcookie('uid',null,time()+60*60*24,'/','lening.com',false,true);
-        setcookie('token',null,time()+60*60*24,'/user','',false,true);
+        setcookie('uid',null,'','/','lening.com',false,true);
+        setcookie('token',null,'','/user','',false,true);
         echo "退出成功";
         header('Refresh:2;url=/user/login');
     }

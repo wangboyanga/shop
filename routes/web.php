@@ -75,7 +75,7 @@ Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('che
 Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');
 Route::get('/order/alipay/test','Order\AlipayController@test')->middleware('check.login.token');
 
-Route::post('/pay/alipay/notify','Pay\AlipayController@aliNotify');        //支付宝支付 异步通知回调
-Route::get('/pay/alipay/return','Pay\AlipayController@aliReturn');        //支付宝支付 同步通知回调
+Route::post('/pay/alipay/notify','Order\AlipayController@aliNotify');        //支付宝支付 异步通知回调
+Route::get('/pay/alipay/return','Order\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 
 
