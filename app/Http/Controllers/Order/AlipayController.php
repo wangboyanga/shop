@@ -6,14 +6,19 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 class AlipayController extends Controller
 {
-    public $app_id = '2016092200571864';
-    public $gate_way = 'https://openapi.alipaydev.com/gateway.do';
-    public $notify_url = 'http://www.wangby.cn/order/alipay/notify';
+    public $app_id;
+    public $gate_way;
+    public $notify_url;
     public $rsaPrivateKeyFilePath = './key/priv.key';
+    public function __construct()
+    {
+        $this->app_id=env("ALIPAY_APP_ID");
+        $this->gate_way=env("ALIPAY_GATE_WAY");
+        $this->notify_url=env("ALIPAY_NOTILY_URL");
+    }
 
     public function test()
     {
-
         $bizcont = [
             'subject'           => 'ancsd'. mt_rand(1111,9999).str_random(6),
             'out_trade_no'      => 'oid'.date('YmdHis').mt_rand(1111,2222),
