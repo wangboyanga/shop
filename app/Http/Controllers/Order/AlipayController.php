@@ -19,7 +19,6 @@ class AlipayController extends Controller
             'out_trade_no'      => 'oid'.date('YmdHis').mt_rand(1111,2222),
             'total_amount'      => 0.01,
             'product_code'      => 'QUICK_WAP_WAY',
-
         ];
 
         $data = [
@@ -51,7 +50,6 @@ class AlipayController extends Controller
     }
 
     protected function sign($data) {
-
         $priKey = file_get_contents($this->rsaPrivateKeyFilePath);
         $res = openssl_get_privatekey($priKey);
 
