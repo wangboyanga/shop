@@ -17,11 +17,8 @@ class CheckLoginToken
     public function handle($request, Closure $next)
     {
         if(!$request->session()->get('u_token')){
-            echo json_encode([
-                'error' => 301,
-                'url'   => url('/user/login')
-            ]);
-            die;
+            header('Refresh:2;url=/user/login');
+            echo "请先登录";exit;
         }
         //echo $request->session()->get('u_token');echo '</br>';
         return $next($request);
