@@ -262,12 +262,9 @@ class AlipayController extends Controller
      * 处理订单逻辑 更新订单 支付状态 更新订单支付金额 支付时间
      * @param $data
      */
-    public function dealOrder($data)
+    public function deleteOrder()
     {
 
 
-        //加积分
-        //echo "支付成功";
-        //减库存
     }
 }
