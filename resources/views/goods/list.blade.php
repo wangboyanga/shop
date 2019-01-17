@@ -16,7 +16,7 @@
                 <td>{{$v['goods_id']}}</td>
                 <td>{{$v['goods_name']}}</td>
                 <td>{{$v['store']}}</td>
-                <td>{{date('Y-m-d H-i-s',$v['add_time'])}}</td>
+                <td>{{$v['created_at']}}</td>
                 <td style="width:200px">
                     <a href="/goods/list/{{$v['goods_id']}}" id="submit_order" class="btn btn-info "> 商品详情 </a>
                 </td>
