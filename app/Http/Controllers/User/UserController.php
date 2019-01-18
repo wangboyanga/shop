@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Auth;
 use App\Model\UserModel;
 
 class UserController extends Controller
@@ -155,5 +155,9 @@ class UserController extends Controller
         setcookie('token',null,'','/user','',false,true);
         echo "退出成功";
         header('Refresh:2;url=/user/login');
+    }
+    public function quit(){
+        Auth::logout();
+        header('location:/login');
     }
 }

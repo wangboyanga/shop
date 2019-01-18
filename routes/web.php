@@ -44,12 +44,12 @@ Route::get('/query/where','Test\TestController@query2');
 Route::get('/test','User\UserController@test');
 
 //用户注册
-Route::get('/user/reg','User\UserController@reg');
-Route::post('/user/reg','User\UserController@doReg');
-Route::get('/user/login','User\UserController@login');
-Route::post('/user/login','User\UserController@doLogin');
-Route::get('/user/center','User\UserController@center');
-Route::get('/user/logou','User\UserController@logou');
+//Route::get('/user/reg','User\UserController@reg');
+//Route::post('/user/reg','User\UserController@doReg');
+//Route::get('/user/login','User\UserController@login');
+//Route::post('/user/login','User\UserController@doLogin');
+//Route::get('/user/center','User\UserController@center');
+Route::get('/logou','User\UserController@quit');
 
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
@@ -57,26 +57,27 @@ Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 
 Route::get('/check_cookie','Mvc\MvcController@checkCookie')->middleware('check.cookie');
-Route::get('/cart','Cart\CartController@index')->middleware('check.login.token');
-Route::get('/cart/add/{goods_id}','Cart\CartController@add')->middleware('check.login.token');
-Route::post('/cart/add2','Cart\CartController@add2')->middleware('check.login.token');
-Route::get('/cart/del/{goods_id}','Cart\CartController@del')->middleware('check.login.token');
-Route::get('/cart/del2/{id}','Cart\CartController@del2')->middleware('check.login.token');
+Route::get('/cart','Cart\CartController@index');
+Route::get('/cart/add/{goods_id}','Cart\CartController@add');
+Route::post('/cart/add2','Cart\CartController@add2');
+Route::get('/cart/del/{goods_id}','Cart\CartController@del');
+Route::get('/cart/del2/{id}','Cart\CartController@del2');
 
 //商品详情
-Route::get('/goods/list/{goods_id}','Goods\GoodsController@index')->middleware('check.login.token');
-Route::get('/goods/list','Goods\GoodsController@list')->middleware('check.login.token');
-Route::get('/order/add','Order\OrderController@add')->middleware('check.login.token');
-Route::get('/order/list','Order\OrderController@list')->middleware('check.login.token');
-Route::get('/order/refund/{order_id}','Order\OrderController@refund')->middleware('check.login.token');
-Route::get('/order/list2/{order_id}','Order\OrderController@list2')->middleware('check.login.token');
-Route::get('/order/pay/{order_id}','Order\OrderController@pay')->middleware('check.login.token');
-Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('check.login.token');
-Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');
-Route::get('/order/alipay/test','Order\AlipayController@test')->middleware('check.login.token');
+Route::get('/goods/list/{goods_id}','Goods\GoodsController@index');
+Route::get('/goods/list','Goods\GoodsController@list');
+
+Route::get('/order/add','Order\OrderController@add');
+Route::get('/order/list','Order\OrderController@list');
+Route::get('/order/refund/{order_id}','Order\OrderController@refund');
+Route::get('/order/list2/{order_id}','Order\OrderController@list2');
+Route::get('/order/pay/{order_id}','Order\OrderController@pay');
+Route::get('/order/off/{order_id}','Order\OrderController@off');
+Route::get('/order/wby','Order\OrderController@wby');
+Route::get('/order/alipay/test','Order\AlipayController@test');
 
 
-Route::get('/pay/o/{order_id}','Order\AlipayController@pay')->middleware('check.login.token');//订单支付
+Route::get('/pay/o/{order_id}','Order\AlipayController@pay');//订单支付
 Route::post('/pay/alipay/notify','Order\AlipayController@aliNotify');        //支付宝支付 异步通知回调
 Route::get('/pay/alipay/return','Order\AlipayController@aliReturn');        //支付宝支付 同步通知回调
 Route::get('/pay/delete','Order\AlipayController@deleteOrder');        //支付宝支付 同步通知回调
