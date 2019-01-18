@@ -82,3 +82,7 @@ Route::get('/pay/alipay/return','Order\AlipayController@aliReturn');        //�
 Route::get('/pay/delete','Order\AlipayController@deleteOrder');        //支付宝支付 同步通知回调
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
