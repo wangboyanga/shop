@@ -75,7 +75,7 @@ class GoodsController extends Controller
 //            'message'   => 'ok'
 //        ];
 //        return $response;
-//    }
+//    } v
     protected function form(){
         $form=new Form(new GoodsModel());
         $form->display('goods_id','商品id');
