@@ -7,10 +7,16 @@ use App\Http\Controllers\Controller;
 use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\OrderModel;
+use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use GuzzleHttp\Client;
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index(){
         echo __METHOD__;
     }
@@ -31,7 +37,7 @@ class OrderController extends Controller
     //下单
     public function add(Request $request){
         //查询购物车中的商品
-        $goods=CartModel::where(['uid'=>session()->get('uid')])->orderBy('id','desc')->get()->toArray();
+        $goods=CartModel::where(['uid'=>Auth::id()])->orderBy('id','desc')->get()->toArray();
         if(empty($goods)){
             die("购物车中无商品");
         }
@@ -57,7 +63,7 @@ class OrderController extends Controller
         $order_number=OrderModel::generateOrderSN();
         $data=[
             'order_number'=>$order_number,
-            'uid'=>session()->get('uid'),
+            'uid'=>Auth::id(),
             'add_time'=>time(),
             'order_amount'=>$order_amount,
             'goods_id'=>$goods_id,
@@ -72,11 +78,11 @@ class OrderController extends Controller
         echo "下单成功,您的订单号为：".$order_number;
         header('Refresh:2;url=/order/list');
         //清空购物车
-        CartModel::where(['uid'=>session()->get('uid')])->delete();
+        CartModel::where(['uid'=>Auth::id()])->delete();
 
     }
     public function list(Request $request){
-        $data=OrderModel::where(['uid'=>session()->get('uid')])->get();
+        $data=OrderModel::where(['uid'=>Auth::id()])->get();
         $info=[
             'data'=>$data
         ];

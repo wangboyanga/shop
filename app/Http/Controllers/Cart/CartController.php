@@ -5,16 +5,20 @@
     use App\Model\CartModel;
     use Illuminate\Http\Request;
     use App\Http\Controllers\Controller;
+    use Illuminate\Support\Facades\Auth;
+
     class CartController extends Controller{
-        public $uid;
+//        public function __construct()
+//        {
+//            $this->middleware(function($request,$next){
+//                $this->uid= session()->get('uid');
+//                return $next($request);
+//            });
+//        }
         public function __construct()
         {
-            $this->middleware(function($request,$next){
-                $this->uid= session()->get('uid');
-                return $next($request);
-            });
+            $this->middleware('auth');
         }
-
         public function index(Request $request){
 //            $goods = session()->get('cart_goods');
 //            if(empty($goods)){
@@ -26,7 +30,7 @@
 //                    echo '<pre>';print_r($detail);echo '</pre>';
 //                }
 //            }
-            $cart_goods = CartModel::where(['uid'=>$this->uid])->get()->toArray();
+            $cart_goods = CartModel::where(['uid'=>Auth::id()])->get()->toArray();
             //print_r($cart_goods);
             if(empty($cart_goods)){
                 header('refresh:2;url=/goods/list');
@@ -94,13 +98,13 @@
                 'goods_id'=>$goods_id,
                 'num'=>$num,
                 'add_time'=>time(),
-                'uid'=>$this->uid,
+                'uid'=>Auth::id(),
                 'session_token'=>session()->get('u_token')
             ];
             //var_dump($data);exit;
             $where=[
                 'goods_id'=>$goods_id,
-                'uid'=>$this->uid
+                'uid'=>Auth::id()
             ];
             $res=CartModel::where($where)->first();
             if(!empty($res)){

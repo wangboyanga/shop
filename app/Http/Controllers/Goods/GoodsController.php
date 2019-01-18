@@ -9,6 +9,10 @@ use App\Http\Controllers\Controller;
 class GoodsController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index($goods_id){
         if($goods_id<=0){
             echo '请选择正确商品';
