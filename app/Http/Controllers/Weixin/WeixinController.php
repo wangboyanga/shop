@@ -19,7 +19,12 @@ class WeixinController extends Controller
 
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
 
-
+    public function test()
+    {
+        //echo __METHOD__;
+        //$this->getWXAccessToken();
+        $this->getUserInfo(1);
+    }
 
     /**
      * 接收微信服务器事件推送
