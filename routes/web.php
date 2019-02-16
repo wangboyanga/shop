@@ -90,3 +90,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //购票
 Route::get('/movie/seat','Movie\IndexController@index');
+
+
+//微信
+Route::get('/weixin/valid','Weixin\WeixinController@validToken');
+Route::post('/weixin/valid','Weixin\WeixinController@validToken');
