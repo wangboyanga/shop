@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     //echo 1;
-    return view('welcome');
+    phpinfo();
 });
 
 Route::get('/adduser','User\UserController@add');
@@ -87,3 +87,6 @@ Route::get('/pay/delete','Order\AlipayController@deleteOrder');        //支付�
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//购票
+Route::get('/movie/seat','Movie\IndexController@index');
