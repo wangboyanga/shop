@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CartModel extends Model
+class WeixinUser extends Model
 {
     //
     public $table = 'p_wx_users';
