@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redis;
 use GuzzleHttp;
+use Illuminate\Support\Facades\Storage;
 class WeixinController extends Controller
 {
      /**
@@ -39,12 +40,19 @@ class WeixinController extends Controller
         $event = $xml->Event;                    //事件类型
         $openid = $xml->FromUserName;
         //处理用户发送消息
-        if(isset($xml->MsgType)){
+        if(isset($xml->MsgType)){    //用户发送文本
             if($xml->MsgType=='text'){
                 $msg=$xml->Content;
                 $xml_response= '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg. date('Y-m-d H:i:s') .']]></Content></xml>';
-                echo $xml_response;exit;
+                echo $xml_response;
+            }elseif($xml->MsgType=='image'){     //用户发送图片
+                if(1){     //下载图片
+                    $this->dlWxImg($xml->MediaId);
+                    $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. str_random(10) . ' >>> ' . date('Y-m-d H:i:s') .']]></Content></xml>';
+                    echo $xml_response;
+                }
             }
+            exit();
         }
         //var_dump($xml);echo '<hr>';
         if($event=='subscribe'){
@@ -92,7 +100,26 @@ class WeixinController extends Controller
         $xml_response='<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$from.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.'Hello World,现在时间'.date('Y-m-d H:i:s').']]></Content></xml>';
         echo $xml_response;
     }
+    //下载图片
+    public function dlWxImg($media_id){
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken().'&media_id='.$media_id;
+        //获取图片
+        $client=new GuzzleHttp\Client();
+        $response=$client->get($url);
+        //获取文件名
+        $file_info=$response->getHeader('Content-disposition');
+        $file_name = substr(rtrim($file_info[0],'"'),-20);
+        $wx_image_path = 'wx/images/'.$file_name;
+        //保存图片
+        $r = Storage::disk('local')->put($wx_image_path,$response->getBody());
+        if($r){     //保存成功
+            echo "保存成功";
+        }else{      //保存失败
+            echo "保存失败";
+        }
 
+
+    }
 
     /**
      * 接收事件推送
