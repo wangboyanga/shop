@@ -35,7 +35,7 @@ class WeixinController extends Controller
     {
         $data = file_get_contents("php://input");
         //解析XML
-        $xml = simplexml_load_string($data);         //将 xml字符串 转换成对象
+        $xml = simplexml_load_string($data);
         $event = $xml->Event;                     //事件类型
         $openid = $xml->FromUserName;
         //var_dump($xml);echo '<hr>';
