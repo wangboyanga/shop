@@ -37,6 +37,14 @@ class WeixinController extends Controller
         $xml = simplexml_load_string($data);
         $event = $xml->Event;                    //事件类型
         $openid = $xml->FromUserName;
+        //处理用户发送消息
+        if(isset($xml->MsgType)){
+            if($xml->MsgType=='text'){
+                $msg=$xml->Content;
+                $xml_response= '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['.$msg. date('Y-m-d H:i:s') .']]></Content></xml>';
+                echo $xml_response;exit;
+            }
+        }
         //var_dump($xml);echo '<hr>';
         if($event=='subscribe'){
             //用户openid
