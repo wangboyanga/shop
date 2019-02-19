@@ -37,6 +37,8 @@ class WeixinController extends Controller
         $data = file_get_contents("php://input");
         //解析XML
         $xml = simplexml_load_string($data);
+        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
+        file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
         $event = $xml->Event;                    //事件类型
         $openid = $xml->FromUserName;
         //处理用户发送消息
@@ -90,8 +92,7 @@ class WeixinController extends Controller
             }
         }
 
-        $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
-        file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
+
 
     }
     //客服处理
