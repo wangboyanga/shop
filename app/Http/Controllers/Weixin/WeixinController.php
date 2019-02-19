@@ -130,6 +130,7 @@ class WeixinController extends Controller
     public function createMenu(){
         // 1 获取access_token 拼接请求接口
         $url='https://api.weixin.qq.com/cgi-bin/menu/create?access_token='.$this->getWXAccessToken();
+        //echo $url;echo '</br>';exit;
         //2请求微信接口
         $client=new GuzzleHttp\Client(['base_uri'=>$url]);
         $data=[
@@ -137,7 +138,7 @@ class WeixinController extends Controller
                 [
                     "type"=>"view",//view类型  跳转指定地址url
                     "name"=>"study",
-                    "url"=>"www.baidu.com"
+                    "url"=>"https://www.baidu.com"
                 ]
             ]
         ];
@@ -145,6 +146,7 @@ class WeixinController extends Controller
         $r = $client->request('POST',$url, [
             'body' => json_encode($data)
         ]);
+        //var_dump($r);exit;
         //接收微信接口返回信息
         $request_arr=json_decode($r->getBody(),true);
         if($request_arr['errcode']==0){
