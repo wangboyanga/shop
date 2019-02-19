@@ -38,9 +38,10 @@ class WeixinController extends Controller
         $xml = simplexml_load_string($data);        //将 xml字符串 转换成对象
 
         $event = $xml->Event;                     //事件类型
+        $openid = $xml->FromUserName;
         //var_dump($xml);echo '<hr>';
         if($event=='subscribe'){
-            $openid = $xml->FromUserName;               //用户openid
+                          //用户openid
             $sub_time = $xml->CreateTime;               //扫码关注时间
 
             echo 'openid: '.$openid;echo '</br>';
@@ -68,13 +69,22 @@ class WeixinController extends Controller
                 $id = WeixinUser::insertGetId($user_data);      //保存用户信息
                 var_dump($id);
             }
+        }elseif($event=='CLICK'){
+            if($xml->EventKey=='kefu01'){
+                $this->kefu01($openid,$xml->ToUserName);
+            }
         }
 
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents('logs/wx_event.log',$log_str,FILE_APPEND);
 
     }
-
+    //客服处理
+    public function kefu01($openid,$from){
+        //文本信息
+        $xml_response='<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$from.']]></FromUserName> <CreateTime>'.time().'</CreateTime> <MsgType>< ![CDATA[text] ]></MsgType> <Content>< ![CDATA['.'Hello World, 现在时间'.date('Y-m-d H:i:s').'] ]></Content> </xml>';
+        echo $xml_response;
+    }
 
 
     /**
@@ -136,19 +146,46 @@ class WeixinController extends Controller
         $data=[
             "button"=>[
                 [
-                    "type"=>"view",//view类型  跳转指定地址url
+                    //"type"=>"click",//view类型  跳转指定地址url
                     "name"=>"study",
-                    "url"=>"https://www.baidu.com"
-                ]
+                    //"url"=>"https://www.baidu.com",
+                    "sub_button"=>[
+                      [
+                          "type"=>"scancode_push",
+                          "name"=>"Mathematics",
+                          "key"=>"rselfmenu_0_1",
+                          "sub_button"=> [ ]
+                      ]
+                    ]
+                ],
+                [
+                    //"type"=>"click",//view类型  跳转指定地址url
+                    "name"=>"百度",
+                    //"url"=>"https://www.baidu.com",
+                    "sub_button"=>[
+                        [
+                            "type"=>"view",
+                            "name"=>"网址",
+                            "url"=>"https://www.baidu.com",
+                        ]
+                    ]
+                ],
+                [
+                    "type"=>"click",//view类型  跳转指定地址url
+                    "name"=>"客服01",
+                    "key"=>"kefu01"
+                    //"url"=>"https://www.baidu.com",
+                ],
             ]
         ];
 
         $r = $client->request('POST',$url, [
-            'body' => json_encode($data)
+            'body' => json_encode($data,JSON_UNESCAPED_UNICODE)
         ]);
         //var_dump($r);exit;
         //接收微信接口返回信息
         $request_arr=json_decode($r->getBody(),true);
+
         if($request_arr['errcode']==0){
             echo "菜单创建成功";
         }else{
