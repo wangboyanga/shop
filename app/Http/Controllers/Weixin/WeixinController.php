@@ -34,9 +34,8 @@ class WeixinController extends Controller
     public function wxEvent()
     {
         $data = file_get_contents("php://input");
-        //解析XML
         $xml = simplexml_load_string($data);
-        $event = $xml->Event;                     //事件类型
+        $event = $xml->Event;                    //事件类型
         $openid = $xml->FromUserName;
         //var_dump($xml);echo '<hr>';
         if($event=='subscribe'){
