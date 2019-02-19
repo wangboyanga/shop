@@ -54,7 +54,7 @@ class WeixinController extends Controller
                     echo $xml_response;
                 }
             }
-            exit();
+            exit;
         }
         //var_dump($xml);echo '<hr>';
         if($event=='subscribe'){
@@ -114,9 +114,9 @@ class WeixinController extends Controller
         //保存图片
         $r = Storage::disk('local')->put($wx_image_path,$response->getBody());
         if($r){     //保存成功
-            echo "保存成功";
+            //echo "保存成功";
         }else{      //保存失败
-            echo "保存失败";
+            //echo "保存失败";
         }
 
 
