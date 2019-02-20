@@ -57,6 +57,10 @@ class WeixinController extends Controller
                 $this->dlVoice($xml->MediaId);
                 $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. str_random(10) . ' >>> ' . date('Y-m-d H:i:s') .']]></Content></xml>';
                 echo $xml_response;
+            }elseif($xml->MsgType=='video'){
+                $this->dlVideo($xml->MediaId);
+                $xml_response = '<xml><ToUserName><![CDATA['.$openid.']]></ToUserName><FromUserName><![CDATA['.$xml->ToUserName.']]></FromUserName><CreateTime>'.time().'</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA['. str_random(10) . ' >>> ' . date('Y-m-d H:i:s') .']]></Content></xml>';
+                echo $xml_response;
             }elseif($xml->MsgType=='event'){
                 //var_dump($xml);echo '<hr>';
                 if($event=='subscribe'){
@@ -136,6 +140,24 @@ class WeixinController extends Controller
         $file_name = substr(rtrim($file_info[0],'"'),-20);
         $wx_image_path = 'wx/voicd/'.$file_name;
         //保存语音
+        $r = Storage::disk('local')->put($wx_image_path,$response->getBody());
+        if($r){     //保存成功
+            //echo "ok";
+        }else{      //保存失败
+            //echo "no";
+        }
+    }
+    //下载视频
+    public function dlVideo($media_id){
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken().'&media_id='.$media_id;
+        //获取图片
+        $client=new GuzzleHttp\Client();
+        $response=$client->get($url);
+        //获取文件名
+        $file_info=$response->getHeader('Content-disposition');
+        $file_name = substr(rtrim($file_info[0],'"'),-20);
+        $wx_image_path = 'wx/video/'.$file_name;
+        //保存视频
         $r = Storage::disk('local')->put($wx_image_path,$response->getBody());
         if($r){     //保存成功
             //echo "ok";
