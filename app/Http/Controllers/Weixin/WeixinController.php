@@ -100,8 +100,32 @@ class WeixinController extends Controller
             }
             //exit();
         }
-
-
+    }
+    //群发消息
+    public function textGroup(){
+        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken();
+        //请求微信接口
+        $client=new GuzzleHttp\Client(['base_uri' => $url]);
+        $data=[
+            'filter'=>[
+                'is_to_all'=>true,
+                //'tag_id'=>2  //is_to_all为true可不填写
+            ],
+            'text'=>[
+                'content'=>'撒由那拉  欢迎大家'
+            ],
+            'msgtype'=>'text'
+        ];
+        $r=$client->request('post',$url,['body'=>json_encode($data,JSON_UNESCAPED_UNICODE)]);
+        //解析接口返回信息
+        $response_arr=json_decode($r->getBody(),true);
+        var_dump($response_arr);
+        if($response_arr['errcode']==0){
+            echo "群发成功";
+        }else{
+            echo "群发失败，请重试";
+            echo "<br/>";
+        }
 
 
     }
@@ -272,7 +296,14 @@ class WeixinController extends Controller
             echo $request_arr['errmsg'];
         }
     }
-
+    /**
+     * 刷新access_token
+     */
+    public function refreshToken()
+    {
+        Redis::del($this->redis_weixin_access_token);
+        echo $this->getWXAccessToken();
+    }
 
 
 }
