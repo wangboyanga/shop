@@ -13,4 +13,5 @@ Route::group([
     $router->get('/', 'HomeController@index');
     $router->resource('/goods',GoodsController::class);
     $router->resource('/goods2',Goods2Controller::class);
+    $router->resource('/wx/wxuser',WeixinController::class);
 });
