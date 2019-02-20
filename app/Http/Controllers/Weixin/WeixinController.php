@@ -109,7 +109,7 @@ class WeixinController extends Controller
         $data=[
             'filter'=>[
                 'is_to_all'=>true,
-                //'tag_id'=>2  //is_to_all为true可不填写
+                'tag_id'=>2  //is_to_all为true可不填写
             ],
             'text'=>[
                 'content'=>'撒由那拉  欢迎大家'
