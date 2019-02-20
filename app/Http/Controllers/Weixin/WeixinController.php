@@ -103,7 +103,7 @@ class WeixinController extends Controller
     }
     //群发消息
     public function textGroup(){
-        $url = 'https://api.weixin.qq.com/cgi-bin/media/get?access_token='.$this->getWXAccessToken();
+        $url='https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token='.$this->getWXAccessToken();
         //请求微信接口
         $client=new GuzzleHttp\Client(['base_uri' => $url]);
         $data=[
