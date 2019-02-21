@@ -208,6 +208,7 @@ class WeixinController extends Controller
         }else{      //保存失败
             //echo "no";
         }
+        return $file_name;
     }
     //下载视频
     public function dlVideo($media_id){
@@ -226,6 +227,7 @@ class WeixinController extends Controller
         }else{      //保存失败
             //echo "no";
         }
+        return $file_name;
     }
 
     /**
