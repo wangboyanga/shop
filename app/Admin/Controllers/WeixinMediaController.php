@@ -89,7 +89,13 @@ class WeixinMediaController extends Controller
         $grid->format('Format');
         $grid->msg_id('Msg id');
         $grid->local_file_name('Local file name')->display(function($img){
-            return "<img src='https://www.wangby.cn/wx/images/".$img."'>";
+            if(substr($img,-3,3)=='mp4'){
+                return "<a href='/wx/video'".$img.">观看视频</a>";
+            }elseif(substr($img,-3,3)=='amr'){
+                return "<a href='/wx/voice'".$img.">听取录音</a>";
+            }elseif(substr($img,-3,3)=='jpg'){
+                return "<img height='150px' width='200px' src='https://www.wangby.cn/wx/images/".$img."'>";
+            }
         });
         $grid->local_file_path('Local file path');
 
