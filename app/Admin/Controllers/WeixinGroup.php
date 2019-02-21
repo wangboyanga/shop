@@ -9,7 +9,7 @@ use Encore\Admin\Form;
 use Encore\Admin\Grid;
 use Encore\Admin\Layout\Content;
 use Encore\Admin\Show;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Redis;
 use GuzzleHttp;
 use Illuminate\Http\Request;
 
