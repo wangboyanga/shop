@@ -11,6 +11,7 @@ Route::group([
 ], function (Router $router) {
 
     $router->get('/', 'HomeController@index');
+    $router->post('/wx/wxuser', 'WeixinGroup@textGroup');
     $router->resource('/goods',GoodsController::class);
     $router->resource('/goods2',Goods2Controller::class);
     $router->resource('/wx/wxuser',WeixinController::class);
