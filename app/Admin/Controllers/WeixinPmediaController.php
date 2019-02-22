@@ -2,7 +2,7 @@
 
 namespace App\Admin\Controllers;
 
-use App\Model\WeixinUser;
+use App\Model\WeixinPmedia;
 use App\Http\Controllers\Controller;
 use Encore\Admin\Controllers\HasResourceActions;
 use Encore\Admin\Form;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redis;
 use GuzzleHttp;
 use Illuminate\Http\Request;
 
-class WeixinGroup extends Controller
+class WeixinPmediaController extends Controller
 {
     use HasResourceActions;
 
@@ -82,16 +82,17 @@ class WeixinGroup extends Controller
      */
     protected function grid()
     {
-        $grid = new Grid(new WeixinUser);
+        $grid = new Grid(new WeixinPmedia);
 
         $grid->id('Id');
-        $grid->uid('Uid');
         $grid->openid('Openid');
         $grid->add_time('Add time');
-        $grid->nickname('Nickname');
-        $grid->sex('Sex');
-        $grid->headimgurl('Headimgurl');
-        $grid->subscribe_time('Subscribe time');
+        $grid->msg_type('Msg type');
+        $grid->media_id('Media id');
+        $grid->format('Format');
+        $grid->msg_id('Msg id');
+        $grid->local_file_name('Local file name');
+        $grid->local_file_path('Local file path');
 
         return $grid;
     }
@@ -104,16 +105,17 @@ class WeixinGroup extends Controller
      */
     protected function detail($id)
     {
-        $show = new Show(WeixinUser::findOrFail($id));
+        $show = new Show(WeixinPmedia::findOrFail($id));
 
         $show->id('Id');
-        $show->uid('Uid');
         $show->openid('Openid');
         $show->add_time('Add time');
-        $show->nickname('Nickname');
-        $show->sex('Sex');
-        $show->headimgurl('Headimgurl');
-        $show->subscribe_time('Subscribe time');
+        $show->msg_type('Msg type');
+        $show->media_id('Media id');
+        $show->format('Format');
+        $show->msg_id('Msg id');
+        $show->local_file_name('Local file name');
+        $show->local_file_path('Local file path');
 
         return $show;
     }
@@ -125,38 +127,67 @@ class WeixinGroup extends Controller
      */
     protected function form()
     {
-        $form = new Form(new WeixinUser);
-        $form->textarea('content','群发内容');
+        $form = new Form(new WeixinPmedia);
+
+        $form->file('media');
+
         return $form;
     }
-    //群发
-    protected function textGroup(Request $request){
-        $content=$request->input('content');
-        $url='https://api.weixin.qq.com/cgi-bin/message/mass/sendall?access_token='.$this->getWXAccessToken();
-        //请求微信接口
-        $client=new GuzzleHttp\Client(['base_uri' => $url]);
-        $data=[
-            'filter'=>[
-                'is_to_all'=>true,
-                'tag_id'=>2  //is_to_all为true可不填写
-            ],
-            'text'=>[
-                'content'=>$content
-            ],
-            'msgtype'=>'text'
-        ];
-        $r=$client->request('post',$url,['body'=>json_encode($data,JSON_UNESCAPED_UNICODE)]);
-        //解析接口返回信息
-        $response_arr=json_decode($r->getBody(),true);
-        var_dump($response_arr);
-        if($response_arr['errcode']==0){
-            echo "群发成功";
-        }else{
-            echo "群发失败，请重试";
-            echo "<br/>";
-        }
+
+    public function formTest(Request $request){
+        //echo '<pre>';print_r($_POST);echo '</pre>';echo '<hr>';
+        //echo '<pre>';print_r($_FILES);echo '</pre>';echo '<hr>';
+        //接收文件
+        $img_file=$request->file('media');
+        //print_r($img_file);exit;
+        //文件名
+        $img_origin_name=$img_file->getClientOriginalName();
+        //print_r($img_origin_name);echo "</pre>";
+        //文件类型
+        $file_ext=$img_file->getClientOriginalExtension();
+        //print_r($file_ext);echo "</pre>";
+        //重命名
+        $new_file_name=str_random(15).'.'.$file_ext;
+        //echo $new_file_name;
+        //保存文件
+
+        //保存的路径
+        $save_file_path=$request->media->storeAs('form_test',$new_file_name);//值为保存的路径
+        //echo $save_file_path;
+        //上传至微信永久素材
+        $this->upMaterialTest($save_file_path);
+
     }
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
+    public function upMaterialTest($file_path){
+        $url='https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->getWXAccessToken().'&type=image';
+        $client=new GuzzleHttp\Client();
+        $response=$client->request('POST',$url,[
+            'multipart' => [
+                [
+                    'name'     => 'media',
+                    'contents' => fopen($file_path, 'r')
+                ],
+            ]
+        ]);
+        $body=$response->getBody();
+        echo $body;echo "</br>";
+        $d=json_decode($body,true);
+        echo '<pre>';print_r($d);echo "</pre>";
+        $data=[
+            'media_id'=>$d['media_id'],
+            'add_time'=>time(),
+            'local_file_path'=>$d['url']
+        ];
+        $re=WeixinPmedia::insertGetId($data);
+        //echo $re;
+        if($re){
+            echo '添加成功';
+        }else{
+            echo "添加失败";
+        }
+    }
+
     public function getWXAccessToken()
     {
 

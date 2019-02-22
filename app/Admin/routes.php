@@ -17,4 +17,8 @@ Route::group([
     $router->resource('/wx/wxmedia',WeixinMediaController::class);
     $router->resource('/wx/group',WeixinGroup::class);
     $router->post('/wx/group', 'WeixinGroup@textGroup');
+
+    //上传永久素材
+    $router->resource('/wx/pmedia',WeixinPmediaController::class);
+    $router->post('/wx/pmedia', 'WeixinPmediaController@formTest');
 });
