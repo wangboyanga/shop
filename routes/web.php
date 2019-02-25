@@ -117,6 +117,7 @@ Route::get('/weixin/create_menu','Weixin\WeixinController@createMenu');     //�
 //微信聊天
 Route::get('/weixin/private','Weixin\WeixinController@formPrivate');     //私聊
 Route::get('/weixin/get_msg','Weixin\WeixinController@privMsg');     //获取用户聊天信息
+Route::post('/weixin/send','Weixin\WeixinController@send');     //客服发给用户
 
 
 

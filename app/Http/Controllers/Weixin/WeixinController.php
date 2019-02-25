@@ -434,5 +434,40 @@ class WeixinController extends Controller
         }
         die( json_encode($response));
     }
+    public function send(Request $request){
+        $send_msg=$request->input('send_msg');
+        $openid=$request->input('openid');
+        $url='https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token='.$this->getWXAccessToken();
+        //请求微信接口
+        $client=new GuzzleHttp\Client(['base_uri' => $url]);
+        $data=[
+            "touser"=>$openid,
+            "msgtype"=>"text",
+            "text"=>
+            [
+                "content"=>$send_msg
+            ]
+        ];
+        $r=$client->request('post',$url,['body'=>json_encode($data,JSON_UNESCAPED_UNICODE)]);
+        //解析接口返回信息
+        $response_arr=json_decode($r->getBody(),true);
+        var_dump($response_arr);
+        $data = [
+            'msg'       => $send_msg,
+            'msgid'     => '',
+            'openid'    => $openid,
+            'msg_type'  => 2,        // 1用户发送消息 2客服发送消息
+            'add_time'  =>time()
+        ];
+
+        $id = WeixinChatModel::insertGetId($data);
+        var_dump($id);
+        if($response_arr['errcode']==0){
+            echo "发送成功";
+        }else{
+            echo "发送失败，请重试";
+            echo "<br/>";
+        }
+    }
 }
 
