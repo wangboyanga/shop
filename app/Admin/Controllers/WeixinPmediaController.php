@@ -155,11 +155,11 @@ class WeixinPmediaController extends Controller
         $save_file_path=$request->media->storeAs('form_test',$new_file_name);//值为保存的路径
         //echo $save_file_path;
         //上传至微信永久素材
-        $this->upMaterialTest($save_file_path);
+        $this->upMaterialTest($save_file_path,$new_file_name);
 
     }
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
-    public function upMaterialTest($file_path){
+    public function upMaterialTest($file_path,$new_file_name){
         $url='https://api.weixin.qq.com/cgi-bin/material/add_material?access_token='.$this->getWXAccessToken().'&type=image';
         $client=new GuzzleHttp\Client();
         $response=$client->request('POST',$url,[
@@ -177,7 +177,8 @@ class WeixinPmediaController extends Controller
         $data=[
             'media_id'=>$d['media_id'],
             'add_time'=>time(),
-            'local_file_path'=>$d['url']
+            'local_file_path'=>$d['url'],
+            'local_file_name'=>$new_file_name
         ];
         $re=WeixinPmedia::insertGetId($data);
         //echo $re;

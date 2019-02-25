@@ -95,7 +95,6 @@ class WeixinController extends Controller
         $grid->subscribe_time('Subscribe time')->display(function($time){
             return date('Y-m-d H:i:s',$time);
         });
-
         return $grid;
     }
 
