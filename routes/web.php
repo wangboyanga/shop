@@ -120,5 +120,10 @@ Route::get('/weixin/get_msg','Weixin\WeixinController@privMsg');     //获取用
 Route::post('/weixin/send','Weixin\WeixinController@send');     //客服发给用户
 
 
+//微信支付
+Route::get('/weixin/pay/test','Weixin\PayController@test');     //微信支付测试
+Route::post('/weixin/pay/notice','Weixin\PayController@notice');     //微信支付通知回调
+
+
 
 
