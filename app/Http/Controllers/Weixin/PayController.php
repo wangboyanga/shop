@@ -169,7 +169,7 @@ class PayController extends Controller
             $sign=$this->verifySign($xml);
             if($sign==$xml['sign']){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
-                $order_number=$xml->out_trade_no;
+                $order_number=$xml['out_trade_no'];
                 $data=[
                     'is_pay'=>2,
                     'pay_time'=>time()
