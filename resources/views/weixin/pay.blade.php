@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <script src="{{URL::asset('/js/goods/qrcode.js')}}"></script>
+    <script src="{{URL::asset('/js/jquery-1.12.4.min.js')}}"></script>
     <title>Document</title>
 </head>
 <body>
