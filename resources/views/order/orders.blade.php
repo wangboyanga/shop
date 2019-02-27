@@ -61,7 +61,8 @@
         <tr>
             <td colspan="2">
                 @if($v['is_pay']==1 && $v['is_delete']==1)
-                    <a href="/pay/o/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 去支付 </a>
+                    <a href="/pay/o/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 支付宝支付 </a>
+                    <a href="/weixin/pay/test/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 微信支付 </a>
                     <a href="/order/off/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 取消订单 </a>
                 @elseif($v['is_pay']==2)
                     <a href="/order/refund/{{$v['order_id']}}" id="submit_order" class="btn btn-info "> 去退款 </a>
