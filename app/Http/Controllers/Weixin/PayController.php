@@ -143,7 +143,13 @@ class PayController extends Controller
         return $buff;
     }
 
-
+    //验签
+    public function verifySign($xml){
+        $this->values=[];
+        $this->values=$xml;
+        $sign=$this->SetSign();
+        return $sign;
+    }
     /**
      * 微信支付回调
      */
@@ -154,14 +160,14 @@ class PayController extends Controller
         //记录日志
         $log_str = date('Y-m-d H:i:s') . "\n" . $data . "\n<<<<<<<";
         file_put_contents('logs/wx_pay_notice.log',$log_str,FILE_APPEND);
-
+        $xml = (array)simplexml_load_string($data,'SimpleXMLElement',LIBXML_NOCDATA);
         $xml = simplexml_load_string($data);
 
         if($xml->result_code=='SUCCESS' && $xml->return_code=='SUCCESS'){      //微信支付成功回调
             //验证签名
-            $sign = true;
-
-            if($sign){       //签名验证成功
+            //$sign = true;
+            $sign=$this->verifySign($xml);
+            if($sign==$xml['sign']){       //签名验证成功
                 //TODO 逻辑处理  订单状态更新
                 $order_number=$xml->out_trade_no;
                 $data=[
@@ -234,3 +240,6 @@ class PayController extends Controller
 
 
 }
+
+
+
