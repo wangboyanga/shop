@@ -10,20 +10,21 @@
 </body>
 </html>
 <script>
-    // 设置参数方式
-    var qrcode = new QRCode('qrcode', {
-        text: 'your content',
-        width: 256,
-        height: 256,
-        colorDark : '#000000',
-        colorLight : '#ffffff',
-        correctLevel : QRCode.CorrectLevel.H
-    });
+    (function() {
+        // 设置参数方式
+        var qrcode = new QRCode('qrcode', {
+            text: 'your content',
+            width: 256,
+            height: 256,
+            colorDark : '#000000',
+            colorLight : '#ffffff',
+            correctLevel : QRCode.CorrectLevel.H
+        });
 
-    // 使用 API
-    qrcode.clear();
-    qrcode.makeCode("{{$code_url}}");
-
+        // 使用 API
+        qrcode.clear();
+        qrcode.makeCode("{{$code_url}}");
+    })()
     setInterval(function () {
         $.ajax({
             headers: {
