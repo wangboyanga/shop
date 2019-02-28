@@ -469,5 +469,17 @@ class WeixinController extends Controller
             echo "<br/>";
         }
     }
+
+    //微信登陆
+    public function login(){
+        return view('weixin.login');
+    }
+    //接收
+    public function getCode()
+    {
+        echo '<pre>';print_r($_GET);echo '</pre>';
+        $code = $_GET['code'];
+        echo 'code: '.$code;
+    }
 }
 
