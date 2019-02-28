@@ -12,10 +12,10 @@ use Ramsey\Uuid\Codec\OrderedTimeCodec;
 use GuzzleHttp\Client;
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     public function index(){
         echo __METHOD__;

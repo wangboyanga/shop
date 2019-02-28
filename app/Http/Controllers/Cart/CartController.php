@@ -15,10 +15,10 @@
 //                return $next($request);
 //            });
 //        }
-        public function __construct()
-        {
-            $this->middleware('auth');
-        }
+//        public function __construct()
+//        {
+//            $this->middleware('auth');
+//        }
         public function index(Request $request){
 //            $goods = session()->get('cart_goods');
 //            if(empty($goods)){

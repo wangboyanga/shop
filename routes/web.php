@@ -44,11 +44,11 @@ Route::get('/query/where','Test\TestController@query2');
 Route::get('/test','User\UserController@test');
 
 //用户注册
-//Route::get('/user/reg','User\UserController@reg');
-//Route::post('/user/reg','User\UserController@doReg');
-//Route::get('/user/login','User\UserController@login');
-//Route::post('/user/login','User\UserController@doLogin');
-//Route::get('/user/center','User\UserController@center');
+Route::get('/user/reg','User\UserController@reg');
+Route::post('/user/reg','User\UserController@doReg');
+Route::get('/user/login','User\UserController@login');
+Route::post('/user/login','User\UserController@doLogin');
+Route::get('/user/center','User\UserController@center');
 Route::get('/logou','User\UserController@quit');
 
 //模板引入静态文件
