@@ -6,6 +6,7 @@
         <button id="btn2">录音开始</button>
         <button id="btn3">录音结束</button>
         <button id="btn4">扫一扫</button>
+        <button id="btn5">地理位置</button>
     </div>
 @endsection
 @section("footer")
@@ -35,11 +36,11 @@
                 });
             });
 
-            $('.btn2').click(function () {
+            $('#btn2').click(function () {
                 //开始录音
                 wx.startRecord();
             })
-            $('.btn3').click(function () {
+            $('#btn3').click(function () {
                 //结束录音
                 wx.stopRecord({
                     success: function (res) {
@@ -47,14 +48,27 @@
                     }
                 });
             })
-            $('.btn4').click(function () {
-            wx.scanQRCode({
-                needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
-                scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
-                success: function (res) {
-                    var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
-                }
-            });
+            $('#btn4').click(function () {
+                //扫一扫
+                wx.scanQRCode({
+                    needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+                    scanType: ["qrCode","barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+                    success: function (res) {
+                        var result = res.resultStr; // 当needResult 为 1 时，扫码返回的结果
+                    }
+                });
+            })
+            $('#btn5').click(function () {
+                //地理位置
+                wx.getLocation({
+                    type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+                    success: function (res) {
+                        var latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                        var longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                        var speed = res.speed; // 速度，以米/每秒计
+                        var accuracy = res.accuracy; // 位置精度
+                    }
+                });
             })
         });
     </script>
