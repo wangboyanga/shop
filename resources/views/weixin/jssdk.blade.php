@@ -3,6 +3,7 @@
     <div class="container">
         <h2>JS-SDK</h2>
         <button id="btn1">选择照片</button>
+        <button id="btn2">地理位置</button>
     </div>
 @endsection
 @section("footer")
@@ -31,6 +32,15 @@
                     }
                 });
             });
+            $('.btn2').click(function () {
+                wx.openLocation({
+                    latitude: 22.545538, // 纬度，浮点数，范围为90 ~ -90。如果是动态获取的数据，使用parseFloat()处理数据
+                    longitude: 114.054565, // 经度，浮点数，范围为180 ~ -180。如果是动态获取的数据，使用parseFloat()处理数据；
+                    name: '老徐家', // 位置名
+                    address: '徐州', // 地址详情说明
+                    scale: 10, // 地图缩放级别,整形值,范围从1~28。默认为最大
+                });
+            })
 
         });
     </script>
