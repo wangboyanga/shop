@@ -25,7 +25,7 @@ class WeixinController extends Controller
     }
 
     protected $redis_weixin_access_token = 'str:weixin_access_token';     //微信 access_token
-
+    protected $redis_weixin_jsapi_ticket = 'str:weixin_jsapi_ticket';     //微信 jsapi_ticket
     public function test()
     {
         //echo __METHOD__;
@@ -539,6 +539,51 @@ class WeixinController extends Controller
         $request->session()->put('uid',$user_info->uid);
         echo "登录成功";
         header("refresh:2,url='/goods/list'");
+    }
+
+
+    public function jssdkTest(){
+        //计算机签名
+        $info=[
+            'appid'=>env('WEIXIN_APPID'),
+            'time'=>time(),
+            'nonceStr'=>str_random(15),
+            //'sign'=>$this->jssign()
+        ];
+        $sign=$this->jssign($info);
+        $info['sign']=$sign;
+
+        return view('weixin.jssdk',$info);
+    }
+
+    //计算jssdk sign
+    public function jssign($param){
+        $current_url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $ticket=$this->getJsapiToken();
+        $str='jsapi_ticket='.$ticket.'&noncestr='.$param['nonceStr'].'&timestamp='.$param['time'].'&url='.$current_url;
+        $signature=sha1($str);
+        return $signature;
+    }
+
+    //获取ticket_token
+    public function getJsapiToken(){
+        //是否有缓存
+        $ticket=Redis::get($this->redis_weixin_jsapi_ticket);
+        if(!$ticket){           //没有缓存
+            $access_token=$this->getWXAccessToken();
+            //var_dump($access_token);
+            $ticket_url='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$access_token.'&type=jsapi';
+            $ticket_info=file_get_contents($ticket_url);
+            $ticket_arr=json_decode($ticket_info,true);
+            //print_r($ticket_arr);exit;
+            if(isset($ticket_arr['ticket'])){
+                $ticket=$ticket_arr['ticket'];
+                Redis::set($this->redis_weixin_jsapi_ticket,$ticket);
+                Redis::setTimeout($this->redis_weixin_jsapi_ticket,3600);
+            }
+
+        }
+        return $ticket;
     }
 }
 

@@ -128,3 +128,8 @@ Route::get('/weixin/pay/wxsuccess','Weixin\PayController@WxSuccess');     //微�
 //微信登陆
 Route::get('/weixin/login','Weixin\WeixinController@login');   //微信登陆
 Route::get('/weixin/getcode','Weixin\WeixinController@getCode');   //微信登陆
+
+
+
+//微信jssdk
+Route::get('/weixin/jssdk','Weixin\WeixinController@jssdkTest');   //jssdk
