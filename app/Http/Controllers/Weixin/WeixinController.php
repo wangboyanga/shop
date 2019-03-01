@@ -570,8 +570,9 @@ class WeixinController extends Controller
         //是否有缓存
         $ticket=Redis::get($this->redis_weixin_jsapi_ticket);
         if(!$ticket){           //没有缓存
-            $access_token=$this->getWXAccessToken();
-            //var_dump($access_token);
+            //$access_token=$this->getWXAccessToken();
+            $access_token='19_QejIlWJ3yMYq_KmDpDHdXmSZZYHW_wl3alBTexqbXMmNFhRZfe2CQ3-ujmfXi7-NjSU7KRIyinoGSq6ESkIErKtWfTPln_RHG9wW3XvqGaCOPl4luZrSHgp_ylDbZZYAtLEyxT5VsXkS7W35GVRcAJACRN';
+            //var_dump($access_token);exit;
             $ticket_url='https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token='.$access_token.'&type=jsapi';
             $ticket_info=file_get_contents($ticket_url);
             $ticket_arr=json_decode($ticket_info,true);
@@ -584,6 +585,10 @@ class WeixinController extends Controller
 
         }
         return $ticket;
+    }
+    public function token(){
+        $access_token=$this->getWXAccessToken();
+        var_dump($access_token);
     }
 }
 
