@@ -547,7 +547,7 @@ class WeixinController extends Controller
         $info=[
             'appid'=>env('WEIXIN_APPID'),
             'time'=>time(),
-            'nonceStr'=>str_random(15),
+            'noncestr'=>str_random(15),
             //'sign'=>$this->jssign()
         ];
         $sign=$this->jssign($info);
@@ -558,9 +558,9 @@ class WeixinController extends Controller
 
     //计算jssdk sign
     public function jssign($param){
-        $current_url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        $current_url='https://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $ticket=$this->getJsapiToken();
-        $str='jsapi_ticket='.$ticket.'&noncestr='.$param['nonceStr'].'&timestamp='.$param['time'].'&url='.$current_url;
+        $str='jsapi_ticket='.$ticket.'&noncestr='.$param['noncestr'].'&timestamp='.$param['time'].'&url='.$current_url;
         $signature=sha1($str);
         return $signature;
     }
