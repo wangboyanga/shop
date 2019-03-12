@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     //echo 1;
-    phpinfo();
+    //phpinfo();
 });
 
 Route::get('/adduser','User\UserController@add');
