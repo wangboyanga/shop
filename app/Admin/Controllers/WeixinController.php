@@ -88,7 +88,15 @@ class WeixinController extends Controller
             return date('Y-m-d H:i:s',$time);
         });
         $grid->nickname('Nickname');
-        $grid->sex('Sex');
+        $grid->sex('Sex')->display(function($sex){
+            if($sex==1){
+                return '男';
+            }elseif($sex==0){
+                return '女';
+            }else{
+                return '待定';
+            }
+        });
         $grid->headimgurl('Headimgurl')->display(function($image){
             return '<img src="'.$image.'">';
         });

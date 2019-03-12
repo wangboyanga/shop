@@ -134,3 +134,7 @@ Route::get('/weixin/getcode','Weixin\WeixinController@getCode');   //微信登�
 //微信jssdk
 Route::get('/weixin/jssdk','Weixin\WeixinController@jssdkTest');   //jssdk
 Route::get('/weixin/token','Weixin\WeixinController@token');   //jssdk
+
+
+//api测试
+Route::get('/api/test1','Api\ApiController@test1');   //jssdk
