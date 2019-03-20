@@ -21,6 +21,6 @@ class ApiController extends Controller
     //测试
     public function post(){
         $data=$_POST;
-        echo json_encode($data);
+        return $data;
     }
 }
