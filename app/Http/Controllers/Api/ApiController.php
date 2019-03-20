@@ -18,4 +18,9 @@ class ApiController extends Controller
         print_r($resquest_arr);
 
     }
+    //测试
+    public function post(){
+        $data=$_POST;
+        echo json_encode($data);
+    }
 }
