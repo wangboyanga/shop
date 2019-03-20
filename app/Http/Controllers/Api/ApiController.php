@@ -22,7 +22,7 @@ class ApiController extends Controller
     public function post(){
         $data=$_POST;
         //echo "<pre>";print_r($_POST);echo "</pre>";
-        return $data;
+        echo json_encode($data);
 
     }
 }
