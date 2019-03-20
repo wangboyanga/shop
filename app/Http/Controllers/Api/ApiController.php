@@ -21,8 +21,22 @@ class ApiController extends Controller
     //测试
     public function post(){
         $data=$_POST;
+        $date=json_encode($data);
         //echo "<pre>";print_r($_POST);echo "</pre>";
-        echo json_encode($data);
+        if(!empty($data)){
+            $res=[
+                'error'=>0,
+                'msg'=>"数据已接收 数据为" .$date
+            ];
+        }else{
+            $res=[
+                'error'=>1,
+                'msg'=>'错误'
+            ];
+        }
+
+        //echo json_encode($data);
+        return $res;
 
     }
 }
