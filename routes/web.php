@@ -140,8 +140,9 @@ Route::get('/weixin/token','Weixin\WeixinController@token');   //jssdk
 //api测试
 Route::get('/api/test1','Api\ApiController@test1');   //jssdk
 Route::post('/api/post','Api\ApiController@post');   //jssdk
-
+//app
 Route::post('/api/applogin','Api\ApiController@appLogin');   //jssdk
+Route::post('/api/appregister','Api\ApiController@appRegister');   //jssdk
 
 
 

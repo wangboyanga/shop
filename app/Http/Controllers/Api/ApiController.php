@@ -88,5 +88,31 @@ class ApiController extends Controller
         $response=json_decode($rs,true);
         return $response;
     }
+    //注册
+    public function appRegister(Request $request){
+        $user_name=$request->input('username');
+        $pwd=$request->input('password');
+        $age=$request->input('age');
+        $email=$request->input('email');
+        $data=[
+            'name'=>$user_name,
+            'password'=>$pwd,
+            'age'=>$age,
+            'email'=>$email,
+            'reg_time'=>time()
+        ];
+        $url='http://passport.wangby.cn/user/appregister';
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_HEADER,0);
+        $rs=curl_exec($ch);
+        //curl_close();
+        //var_dump($rs);exit;
+        $response=json_decode($rs,true);
+        return $response;
+    }
 
 }
