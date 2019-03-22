@@ -130,34 +130,18 @@ class UserController extends Controller
     }
     public function center(Request $request)
     {
-        if(empty($request->session()->get('u_token'))){
-            header('Refresh:2;url=/user/login');
-            //echo $request->session()->get('u_token');
-            die('请先登录');
-        }else if($_COOKIE['token'] != $request->session()->get('u_token')){
-            die("非法请求");
-        }else{
-            echo '正常请求';
-        }
-        if(empty($_COOKIE['uid'])){
-            header('Refresh:2;url=/user/login');
-            echo '请先登录';
-            exit;
-        }else{
-            echo 'UID: '.$_COOKIE['uid'] . ' 欢迎回来';
-            header('Refresh:2;url=/goods/list');
-            echo "</br>";
-            echo "正在前往商品页面";
-        }
+        echo 1;
+        //header('Refresh:2;url=http://passport.test.com/user/login');
     }
     public function logou(){
-        setcookie('uid',null,'','/','lening.com',false,true);
-        setcookie('token',null,'','/user','',false,true);
+        setcookie('uid',null,'','/','test.com',false,true);
+        setcookie('token',null,'','/','test.com',false,true);
         echo "退出成功";
-        header('Refresh:2;url=/user/login');
+        header('Refresh:2;url=http://passport.test.com/user/login');
     }
     public function quit(){
         Auth::logout();
         header('location:/login');
     }
+
 }

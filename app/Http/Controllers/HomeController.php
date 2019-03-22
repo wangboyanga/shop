@@ -21,8 +21,10 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        //$current_url='http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+
         return view('home');
     }
 }

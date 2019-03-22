@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
+    return view('welcome');
     //echo 1;
-    phpinfo();
+    //phpinfo();
 });
 
 Route::get('/adduser','User\UserController@add');
@@ -49,7 +50,7 @@ Route::post('/user/reg','User\UserController@doReg');
 Route::get('/user/login','User\UserController@login');
 Route::post('/user/login','User\UserController@doLogin');
 Route::get('/user/center','User\UserController@center');
-Route::get('/logou','User\UserController@quit');
+Route::get('/logou','User\UserController@logou');
 
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
@@ -86,7 +87,7 @@ Route::get('/pay/delete','Order\AlipayController@deleteOrder');        //支付�
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 //购票
 Route::get('/movie/seat','Movie\IndexController@index');
@@ -139,3 +140,9 @@ Route::get('/weixin/token','Weixin\WeixinController@token');   //jssdk
 //api测试
 Route::get('/api/test1','Api\ApiController@test1');   //jssdk
 Route::post('/api/post','Api\ApiController@post');   //jssdk
+
+Route::post('/api/applogin','Api\ApiController@appLogin');   //jssdk
+
+
+
+

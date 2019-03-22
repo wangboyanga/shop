@@ -39,4 +39,53 @@ class ApiController extends Controller
         return $res;
 
     }
+    //注册
+    public function register(Request $request){
+        $user_name=$request->input('username');
+        $pwd=$request->input('password');
+        $email=$request->input('email');
+        $data=[
+            'name'=>$user_name,
+            'password'=>$pwd,
+            'email'=>$email,
+            'reg_time'=>time()
+        ];
+        //print_r($data);
+        $uid=UserModel::insertGetId($data);
+        if($uid){
+
+            $token = substr(md5(time().mt_rand(1,99999)),10,10);
+            //setcookie('uid',$res->uid,time()+86400,'/','lening.com',false,true);
+            setcookie('uid',$uid,'','/','',false,false);
+            setcookie('token',$token,'','/user','',false,true);
+
+            $request->session()->put('u_token',$token);
+            $request->session()->put('uid',$uid);
+            echo "注册成功";
+            //header('Refresh:2;url=/user/center');
+        }else{
+            echo "注册失败";
+        }
+    }
+    //登陆
+    public function appLogin(Request $request){
+        $username=$request->input('username');
+        $password=$request->input('password');
+        $data=[
+            'username'=>$username,
+            'password'=>$password
+        ];
+        $url='http://passport.wangby.cn/user/applogin';
+        $ch=curl_init();
+        curl_setopt($ch,CURLOPT_URL,$url);
+        curl_setopt($ch,CURLOPT_POST,1);
+        curl_setopt($ch,CURLOPT_POSTFIELDS,['data'=>$data]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_HEADER,0);
+        $rs=curl_exec($ch);
+        curl_close();
+        $response=json_encode($rs,true);
+        return $response;
+    }
+
 }

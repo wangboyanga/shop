@@ -65,15 +65,18 @@
         </style>
     </head>
     <body>
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+
+                        {{--<a href="{{ url('/home') }}">Home</a>--}}
+
+                        {{--<a href="{{ route('login') }}">Login</a>--}}
+                        {{--<a href="{{ route('register') }}">Register</a>--}}
+                        <a href="http://passport.test.com/user/login">登陆</a>
+                        <a href="http://passport.test.com/user/reg">注册</a>
+
                 </div>
             @endif
 
