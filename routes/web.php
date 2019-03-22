@@ -58,30 +58,30 @@ Route::get('/mvc/bst','Mvc\MvcController@bst');
 
 
 Route::get('/check_cookie','Mvc\MvcController@checkCookie')->middleware('check.cookie');
-Route::get('/cart','Cart\CartController@index');
+Route::get('/cart','Cart\CartController@index')->middleware('check.login.token');
 Route::get('/cart/add/{goods_id}','Cart\CartController@add');
 Route::post('/cart/add2','Cart\CartController@add2');
 Route::get('/cart/del/{goods_id}','Cart\CartController@del');
 Route::get('/cart/del2/{id}','Cart\CartController@del2');
 
 //商品详情
-Route::get('/goods/list/{goods_id}','Goods\GoodsController@index');
-Route::get('/goods/list','Goods\GoodsController@list');
+Route::get('/goods/list/{goods_id}','Goods\GoodsController@index')->middleware('check.login.token');
+Route::get('/goods/list','Goods\GoodsController@list')->middleware('check.login.token');
 
-Route::get('/order/add','Order\OrderController@add');
-Route::get('/order/list','Order\OrderController@list');
-Route::get('/order/refund/{order_id}','Order\OrderController@refund');
-Route::get('/order/list2/{order_id}','Order\OrderController@list2');
-Route::get('/order/pay/{order_id}','Order\OrderController@pay');
-Route::get('/order/off/{order_id}','Order\OrderController@off');
-Route::get('/order/wby','Order\OrderController@wby');
-Route::get('/order/alipay/test','Order\AlipayController@test');
+Route::get('/order/add','Order\OrderController@add')->middleware('check.login.token');
+Route::get('/order/list','Order\OrderController@list')->middleware('check.login.token');
+Route::get('/order/refund/{order_id}','Order\OrderController@refund')->middleware('check.login.token');
+Route::get('/order/list2/{order_id}','Order\OrderController@list2')->middleware('check.login.token');
+Route::get('/order/pay/{order_id}','Order\OrderController@pay')->middleware('check.login.token');
+Route::get('/order/off/{order_id}','Order\OrderController@off')->middleware('check.login.token');
+Route::get('/order/wby','Order\OrderController@wby')->middleware('check.login.token');
+Route::get('/order/alipay/test','Order\AlipayController@test')->middleware('check.login.token');
 
 
-Route::get('/pay/o/{order_id}','Order\AlipayController@pay');//订单支付
-Route::post('/pay/alipay/notify','Order\AlipayController@aliNotify');        //支付宝支付 异步通知回调
-Route::get('/pay/alipay/return','Order\AlipayController@aliReturn');        //支付宝支付 同步通知回调
-Route::get('/pay/delete','Order\AlipayController@deleteOrder');        //支付宝支付 同步通知回调
+Route::get('/pay/o/{order_id}','Order\AlipayController@pay')->middleware('check.login.token');//订单支付
+Route::post('/pay/alipay/notify','Order\AlipayController@aliNotify')->middleware('check.login.token');        //支付宝支付 异步通知回调
+Route::get('/pay/alipay/return','Order\AlipayController@aliReturn')->middleware('check.login.token');        //支付宝支付 同步通知回调
+Route::get('/pay/delete','Order\AlipayController@deleteOrder')->middleware('check.login.token');        //支付宝支付 同步通知回调
 
 
 

@@ -27,12 +27,15 @@ class CheckLoginToken
             }else{
                 //token无效
                 $request->attributes->add(['is_login'=>0]);
-                header('Refresh:2;url=http://passport.wangby.cn/user/login');
+
+                header('Refresh:1;url=http://passport.wangby.cn/user/login');
+                echo '请先登录';exit;
             }
         }else{
             //未登录
             $request->attributes->add(['is_login'=>0]);
-            header('Refresh:2;url=http://passport.wangby.cn/user/login');
+            header('Refresh:1;url=http://passport.wangby.cn/user/login');
+            echo '请先登录';exit;
         }
         //echo $request->session()->get('u_token');echo '</br>';
         return $next($request);
