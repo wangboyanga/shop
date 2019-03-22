@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Redis;
 class ApiController extends Controller
 {
     //
