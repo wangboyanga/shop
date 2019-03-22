@@ -101,7 +101,7 @@ class ApiController extends Controller
             'email'=>$email,
             'reg_time'=>time()
         ];
-        $url='http://passport.test.com/user/appregister';
+        $url='http://passport.wangby.cn/user/appregister';
         $ch=curl_init();
         curl_setopt($ch,CURLOPT_URL,$url);
         curl_setopt($ch,CURLOPT_POST,1);
