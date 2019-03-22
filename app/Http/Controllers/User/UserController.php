@@ -134,10 +134,10 @@ class UserController extends Controller
         //header('Refresh:2;url=http://passport.test.com/user/login');
     }
     public function logou(){
-        setcookie('uid',null,'','/','test.com',false,true);
-        setcookie('token',null,'','/','test.com',false,true);
+        setcookie('uid',null,'','/','wangby.cn',false,true);
+        setcookie('token',null,'','/','wangby.cn',false,true);
         echo "退出成功";
-        header('Refresh:2;url=http://passport.test.com/user/login');
+        header('Refresh:2;url=http://passport.wangby.cn/user/login');
     }
     public function quit(){
         Auth::logout();
