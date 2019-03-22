@@ -76,6 +76,7 @@
                         {{--<a href="{{ route('register') }}">Register</a>--}}
                         <a href="http://passport.wangby.cn/user/login">登陆</a>
                         <a href="http://passport.wangby.cn/user/reg">注册</a>
+                        <a href="/logou">退出</a>
 
                 </div>
             @endif

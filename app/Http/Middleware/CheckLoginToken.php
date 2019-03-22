@@ -21,8 +21,7 @@ class CheckLoginToken
             //验证token
             $key='str:u:token:'.$_COOKIE['uid'];
             $token=Redis::hget($key,'web');
-            $app_token=Redis::hget($key,'app');
-            if($_COOKIE['token']==$token || $_COOKIE['token']==$app_token){
+            if($_COOKIE['token']==$token){
                 //token有效
                 $request->attributes->add(['is_login'=>1]);
             }else{
