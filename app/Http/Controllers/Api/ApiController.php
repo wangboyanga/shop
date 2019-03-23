@@ -135,7 +135,7 @@ class ApiController extends Controller
             }else{
                 $response=[
                     'error'=>4001,
-                    'msg'=>'错误'
+                    'msg'=>'token过期，请先登录'
                 ];
             }
         }
