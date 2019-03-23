@@ -143,6 +143,7 @@ Route::post('/api/post','Api\ApiController@post');   //jssdk
 //app
 Route::post('/api/applogin','Api\ApiController@appLogin');   //jssdk
 Route::post('/api/appregister','Api\ApiController@appRegister');   //jssdk
+Route::post('/api/center','Api\ApiController@center');   //jssdk
 
 
 

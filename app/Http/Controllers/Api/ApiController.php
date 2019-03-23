@@ -115,5 +115,32 @@ class ApiController extends Controller
         $response=json_decode($rs,true);
         return $response;
     }
+    //个人
+    public function center(Request $request){
+        $uid=$request->input('uid');
+        $token=$request->input('token');
+        if(empty($uid) || empty($token)){
+            $response=[
+                'error'=>4001,
+                'msg'=>'请先登录'
+            ];
+        }else{
+            $key='str:u:token:'.$uid;
+            $red_token=Redis::hget($key,'app');
+            if($token==$red_token){
+                $response=[
+                    'error'=>0,
+                    'msg'=>'ok',
+                ];
+            }else{
+                $response=[
+                    'error'=>4001,
+                    'msg'=>'错误'
+                ];
+            }
+        }
+        $response=json_decode($response,true);
+        return $response;
+    }
 
 }
