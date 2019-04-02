@@ -23,8 +23,10 @@ class AppController extends Controller
             setcookie('app_id',$res->id,'','/','',false,true);
             Redis::del($redis_key);
             Redis::hset($redis_key,'app',$token);
+            Redis::expire($redis_key,1800);
+            $res['token']=$token;
             $response=[
-                'error'=>1,
+                'error'=>0,
                 'msg'=>$res
             ];
         }else{

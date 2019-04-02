@@ -26,7 +26,9 @@ class LoginController extends Controller
             $redis_key='api:app:user:'.$res->id;
             setcookie('app_token','$token','','/','',false,true);
             setcookie('app_id',$res->id,'','/','',false,true);
+            Redis::del($redis_key);
             Redis::hset($redis_key,'app',$token);
+            Redis::expire($redis_key,1800);
             echo "登陆成功";
             header('Refresh:1;url=/pc/admin');
         }else{
