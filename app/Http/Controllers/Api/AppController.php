@@ -23,7 +23,7 @@ class AppController extends Controller
             setcookie('app_id',$res->id,'','/','',false,true);
             Redis::del($redis_key);
             Redis::hset($redis_key,'app',$token);
-            Redis::expire($redis_key,1800);
+            Redis::expire($redis_key,10);
             $res['token']=$token;
             $response=[
                 'error'=>0,
@@ -34,6 +34,33 @@ class AppController extends Controller
                 'error'=>4001,
                 'msg'=>'账号或密码错误'
             ];
+        }
+        return $response;
+    }
+    public function center(Request $request){
+        $userid=$request->input('userid');
+        $token=$request->input('token');
+        //print_r($userid);exit;
+        $key='api:app:user:'.$userid;
+        $data=Redis::hget($key,'app');
+        //echo $redis;
+        if($token==$data){
+            $response=[
+                'error'=>0,
+                'msg'=>''
+            ];
+        }else{
+            if($data){
+                $response=[
+                    'error'=>4002,
+                    'msg'=>'已在别处登陆'
+                ];
+            }else{
+                $response=[
+                    'error'=>4001,
+                    'msg'=>'已过期'
+                ];
+            }
         }
         return $response;
     }

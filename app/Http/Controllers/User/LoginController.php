@@ -28,7 +28,7 @@ class LoginController extends Controller
             setcookie('app_id',$res->id,'','/','',false,true);
             Redis::del($redis_key);
             Redis::hset($redis_key,'app',$token);
-            Redis::expire($redis_key,1800);
+            Redis::expire($redis_key,10);
             echo "登陆成功";
             header('Refresh:1;url=/pc/admin');
         }else{
@@ -42,10 +42,15 @@ class LoginController extends Controller
             $token=Redis::hget($key,'app');
             if($_COOKIE['app_token']==$token){
                 //token有效
-                echo 'hello';
+               $redis=Redis::TTL($key);
+               //echo $redis;
+               if($redis<=0){
+                   header('Refresh:1;url=/pc/login');
+                   echo '长时间未操作请重启登陆';exit;
+               }
+               echo "hello";
             }else{
                 if($token){
-                    //token无效
                     header('Refresh:1;url=/pc/login');
                     echo '已在别处登陆';exit;
                 }else{
