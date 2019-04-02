@@ -42,8 +42,9 @@ class AppController extends Controller
         $token=$request->input('token');
         //print_r($token);exit;
         $key='api:app:user:'.$userid;
+        echo $key;
         $data=Redis::hget($key,'app');
-        //var_dump($data);exit;
+        var_dump($data);exit;
         if($data){
             if($token==$data){
                 $response=[
@@ -60,7 +61,7 @@ class AppController extends Controller
         }else{
             $response=[
                 'error'=>4001,
-                'msg'=>'请先登录'
+                'msg'=>'已过期'
             ];
             return $response;
         }
