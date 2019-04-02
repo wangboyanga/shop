@@ -40,10 +40,10 @@ class AppController extends Controller
     public function center(Request $request){
         $userid=$request->input('userid');
         $token=$request->input('token');
-        //print_r($userid);exit;
+        //print_r($token);exit;
         $key='api:app:user:'.$userid;
         $data=Redis::hget($key,'app');
-        //echo $redis;
+        //var_dump($data);exit;
         if($token==$data){
             $response=[
                 'error'=>0,
