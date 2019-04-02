@@ -24,7 +24,7 @@ class LoginController extends Controller
         if($res){
             $token=substr(md5(time()+$res->id.mt_rand(1,99999)),10,20);
             $redis_key='api:app:user:'.$res->id;
-            setcookie('app_token','$token','','/','',false,true);
+            setcookie('app_token',$token,'','/','',false,true);
             setcookie('app_id',$res->id,'','/','',false,true);
             Redis::del($redis_key);
             Redis::hset($redis_key,'app',$token);
@@ -36,7 +36,27 @@ class LoginController extends Controller
         }
     }
     public function adminList(Request $request){
-
-        echo "1";
+        if(isset($_COOKIE['app_id']) && isset($_COOKIE['app_token'])){
+            //验证token
+            $key='api:app:user:'.$_COOKIE['app_id'];
+            $token=Redis::hget($key,'app');
+            if($_COOKIE['app_token']==$token){
+                //token有效
+                echo 'hello';
+            }else{
+                if($token){
+                    //token无效
+                    header('Refresh:1;url=/pc/login');
+                    echo '已在别处登陆';exit;
+                }else{
+                    header('Refresh:1;url=/pc/login');
+                    echo '请先登录';exit;
+                }
+            }
+        }else{
+            //未登录
+            header('Refresh:1;url=/pc/login');
+            echo '请先登录';exit;
+        }
     }
 }
