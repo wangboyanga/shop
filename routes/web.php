@@ -45,12 +45,12 @@ Route::get('/query/where','Test\TestController@query2');
 Route::get('/test','User\UserController@test');
 
 //用户注册
-Route::get('/user/reg','User\UserController@reg');
-Route::post('/user/reg','User\UserController@doReg');
-Route::get('/user/login','User\UserController@login');
-Route::post('/user/login','User\UserController@doLogin');
-Route::get('/user/center','User\UserController@center');
-Route::get('/logou','User\UserController@logou');
+//Route::get('/user/reg','User\UserController@reg');
+//Route::post('/user/reg','User\UserController@doReg');
+//Route::get('/user/login','User\UserController@login');
+//Route::post('/user/login','User\UserController@doLogin');
+//Route::get('/user/center','User\UserController@center');
+//Route::get('/logou','User\UserController@logou');
 
 //模板引入静态文件
 Route::get('/mvc/test1','Mvc\MvcController@test1');
@@ -144,6 +144,12 @@ Route::post('/api/post','Api\ApiController@post');   //jssdk
 Route::post('/api/applogin','Api\ApiController@appLogin');   //jssdk
 Route::post('/api/appregister','Api\ApiController@appRegister');   //jssdk
 Route::post('/api/center','Api\ApiController@center');   //jssdk
+
+
+
+Route::get('/pc/login','User\LoginController@login');   //
+Route::post('/pc/logins','User\LoginController@logins');   //
+Route::get('/pc/admin','User\LoginController@adminList');   //
 
 
 
