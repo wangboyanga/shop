@@ -150,6 +150,7 @@ Route::post('/api/center','Api\ApiController@center');   //jssdk
 Route::get('/pc/login','User\LoginController@login');   //
 Route::post('/pc/logins','User\LoginController@logins');   //
 Route::get('/pc/admin','User\LoginController@adminList');   //
+Route::post('/api/applogin','Api\AppController@login');   //
 
 
 

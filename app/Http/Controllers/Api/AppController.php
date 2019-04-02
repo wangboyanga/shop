@@ -32,6 +32,6 @@ class AppController extends Controller
                 'msg'=>'账号或密码错误'
             ];
         }
-        return $response;   
+        return $response;
     }
 }
