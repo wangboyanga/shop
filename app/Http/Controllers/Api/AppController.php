@@ -44,24 +44,25 @@ class AppController extends Controller
         $key='api:app:user:'.$userid;
         $data=Redis::hget($key,'app');
         //var_dump($data);exit;
-        if($token==$data){
-            $response=[
-                'error'=>0,
-                'msg'=>''
-            ];
-        }else{
-            if($data){
+        if($data){
+            if($token==$data){
                 $response=[
-                    'error'=>4002,
-                    'msg'=>'已在别处登陆'
+                    'error'=>0,
+                    'msg'=>''
                 ];
-            }else{
-                $response=[
-                    'error'=>4001,
-                    'msg'=>'已过期'
-                ];
+                return $response;
             }
+            $response=[
+                'error'=>4002,
+                'msg'=>'已在别处登陆'
+            ];
+            return $response;
+        }else{
+            $response=[
+                'error'=>4001,
+                'msg'=>'请先登录'
+            ];
+            return $response;
         }
-        return $response;
     }
 }
