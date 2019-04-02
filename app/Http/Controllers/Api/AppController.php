@@ -61,7 +61,7 @@ class AppController extends Controller
         }else{
             $response=[
                 'error'=>4001,
-                'msg'=>'已过期'
+                'msg'=>'请先登录'
             ];
             return $response;
         }
