@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Redis;
+use App\Model\AppUserModel;
 class AppController extends Controller
 {
     public function login(Request $request){
